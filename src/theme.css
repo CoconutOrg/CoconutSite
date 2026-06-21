@@ -1,0 +1,18 @@
+:root {
+    --main-color: #795548;
+    --secondary-color: #faf8f7;
+    --hover-color: #553b35;
+    --button-hover-box-shadow-px: 0px;
+    --button-hover-box-shadow-py: 0px;
+    --button-hover-box-shadow-blur: 7px;
+    --button-hover-box-shadow-color: #795548;
+}
+
+[data-theme="dark"] {
+    --main-color: #fff;
+    --secondary-color: #000;
+    --hover-color: #999;
+    --button-box-shadow-px: 0px;
+    --button-box-shadow-py: 0px;
+    --button-box-shadow-color: #795548;
+}

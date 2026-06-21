@@ -1,0 +1,8 @@
+{
+  "email_label": "Email",
+  "email_placeholder": "example@gmail.com",
+  "input_empty": "Input cannot be empty",
+  "login_label": "Login",
+  "password_label": "Password",
+  "password_placeholder": "Enter password..."
+}

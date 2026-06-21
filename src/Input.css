@@ -1,0 +1,49 @@
+input[type="text"],
+input[type="tel"],
+input[type="password"] {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 16px;
+    border: 1px solid #B2B2B2;
+    border-radius: 13px;
+    outline: none;
+    transition: all 0.2s ease;
+    background-color: var(--secondary-color);
+    color: var(--main-color);
+}
+
+input[type="text"].input-error,
+input[type="tel"].input-error,
+input[type="password"].input-error {
+    border: 2px solid #fc9191; /* Brighter Red */
+    box-shadow: 0 0 8px rgba(255, 77, 77, 0.4);
+}
+
+input[type="text"].input-error:focus,
+input[type="tel"].input-error:focus,
+input[type="password"].input-error:focus {
+    border: 2px solid var(--hover-color) !important; /* Overrides the red border */
+    box-shadow: 0 0 7.9px var(--hover-color) !important; /* Overrides the red glow */
+}
+
+input::placeholder {
+    color: #B2B2B2;
+}
+
+input:focus {
+    border: 2px solid var(--hover-color);
+    box-shadow: 0 0 7.9px var(--hover-color);
+}
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+input:hover {
+    box-shadow: 0 0 7.9px #999;
+}
+
+.text-input {
+    margin-bottom: 20px;
+    flex-grow: 1;
+}

@@ -1,0 +1,42 @@
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Translucent black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20000; /* Ensures it stays on top of everything */
+    transition: opacity 0.5s ease; /* Smooth fade out */
+}
+
+.loading-overlay.hidden {
+    display: none;
+}
+
+.loader-content {
+    text-align: center;
+    color: white;
+    font-family: sans-serif;
+}
+
+.loader-content p {
+    color: var(--secondary-color);
+}
+
+/* A simple CSS spinner */
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--secondary-color);
+    animation: spin 1s ease-in-out infinite;
+    margin: 0 auto 15px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
