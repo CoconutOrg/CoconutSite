@@ -12,8 +12,8 @@ const UserCredentials = ({ children }) => {
             password: password
         }
 
-        const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/Auth/login`, {
-            method: 'POST',
+        const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/users/login/`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -37,7 +37,7 @@ const UserCredentials = ({ children }) => {
             if (response.status != 401) {
                 return response
             }
-            const responseRefresh = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/Auth/refresh`, {
+            const responseRefresh = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/users/refresh/`, {
                 method: 'PUT',
                 body: JSON.stringify({
                     refreshToken: refreshToken

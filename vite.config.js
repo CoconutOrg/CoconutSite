@@ -8,4 +8,10 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] })
   ],
+  server: {
+    port: 9977,
+    host: '0.0.0.0',
+    strictPort: true,
+    allowedHosts: true
+  }
 })

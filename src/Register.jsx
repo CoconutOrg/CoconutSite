@@ -5,6 +5,7 @@ import { useState } from 'react'
 import './Login.css'
 import LoadingOverlay from './LoadingOverlay'
 import { useNavigate } from 'react-router-dom'
+import './ErrorBox.css'
 
 const Register = () => {
     const { t } = useTranslation()
@@ -23,6 +24,8 @@ const Register = () => {
 
     const [repeatPasswordValue, setRepeatPasswordValue] = useState('')
     const [repeatPasswordError, setRepeatPasswordError] = useState('')
+
+    const [formError, setFormError] = useState('')
 
     // value@value.value
     const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/
@@ -113,27 +116,38 @@ const Register = () => {
             setLoadingHidden(false)
             setTimeout(() => {
                 setLoadingHidden(true)
-                navigate('/')
+                const registerDto = {
+                    username: usernameValue,
+                    email: emailValue,
+                    password: passwordValue
+                }
+                navigate('/register/confirmStatus', { state: registerDto })
             }, 300)
         } else {
+            setLoadingHidden(false)
             const registerDto = {
                 username: usernameValue,
                 email: emailValue,
                 password: passwordValue
             }
-            const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/users/register`, {
+            const response = await fetch(`${import.meta.env.VITE_API_ENDPOINT}/users/register/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(registerDto)
             })
+            setLoadingHidden(true)
             if (!response.ok) {
                 // error
+                setFormError(t('register_error', 'Couldn\'t register!'))
                 return
             }
+            navigate('/register/confirmStatus', { state: registerDto })
         }
     }
+
+    const errorBox = formError === '' ? 'error-box not-visible' : 'error-box visible'
 
     return(
         <div className="login-body">
@@ -164,6 +178,9 @@ const Register = () => {
                                 placeholder={t('password_repeat_placeholder', 'Re-enter password...')} maxLength="48"
                                 onChange={(e, setValue) => { onChangeNotEmpty(e, setValue, setRepeatPasswordError); onChangeRepeatPassword(e) }}
                                 onBlur={(e, setValue) => { onBlurEmpty(e, setValue, setRepeatPasswordError); onBlurRepeatPassword(e) }} defaultError="" />
+                        <div className={errorBox} style={{marginTop: `-10px`}}>
+                            <p>{ formError }</p>
+                        </div>
                     </div>
                 </div>
                 <div className='login-footer-container'>

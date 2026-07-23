@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Input from './Input'
 import LoadingOverlay from './LoadingOverlay'
 import iconImg from './assets/coconut_icon.svg'
 import './Login.css'
+import { CredentialsContext } from './UserCredentials'
 
 const Login = () => {
     const { t } = useTranslation()
@@ -17,6 +18,10 @@ const Login = () => {
 
     const [passwordValue, setPasswordValue] = useState('')
     const [passwordError, setPasswordError] = useState('')
+
+    const [formError, setFormError] = useState('')
+
+    const { login } = useContext(CredentialsContext)
 
     // value@value.value
     const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/
@@ -70,7 +75,7 @@ const Login = () => {
         return true
     }
 
-    const Login = (e) => {
+    const Login = async (e) => {
         let isValid = true;
         if (!onBlurEmail(emailValue)) {
             isValid = false;
@@ -85,12 +90,22 @@ const Login = () => {
             setLoadingHidden(false)
             setTimeout(() => {
                 setLoadingHidden(true)
-                navigate('/')
+                navigate('/app')
             }, 300)
         } else {
-
+            setLoadingHidden(false)
+            const response = await login(emailValue, passwordValue)
+            setLoadingHidden(true)
+            if (!response.ok) {
+                console.log('Error logging in!')
+                setFormError(t('login_error', 'Couldn\'t login!'))
+                return
+            }
+            navigate('/app')
         }
     }
+
+    const errorBox = formError === '' ? 'error-box not-visible' : 'error-box visible'
 
     return(
         <div className="login-body">
@@ -115,6 +130,9 @@ const Login = () => {
                 </div>
                 <div className='login-footer-container'>
                     <button onClick={ Login }>{t('login_label', 'Login')}</button>
+                    <div className={errorBox} style={{marginTop: `-10px`}}>
+                        <p>{ formError }</p>
+                    </div>
                     <a href='/register'>{t('login_register_button_label', 'Don\'t have an account? Create one!')}</a>
                 </div>
             </div>

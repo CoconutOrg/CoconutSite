@@ -1,5 +1,5 @@
 import { createContext, StrictMode, useState, useEffect } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import UserCredentials from './UserCredentials.jsx'
@@ -8,6 +8,8 @@ import './theme.css'
 import './index.css'
 import './i18n'
 import Register from './Register.jsx'
+import RegisterConfirm from './RegisterConfirm.jsx'
+import Dashboard from './Dashboard.jsx'
 
 const ThemeContext = createContext();
 
@@ -32,7 +34,13 @@ const Main = () => {
             <Routes>
               <Route path='/' element={<App />}>
                 <Route index element={<Login />} />
-                <Route path='register' element={<Register />} />
+                <Route path='register' element={<Outlet />}>
+                  <Route index element={<Register />} />
+                  <Route path='confirmStatus' element={<RegisterConfirm />} />
+                </Route>
+                <Route path='app' element={<Outlet />}>
+                  <Route index element={<Dashboard />} />
+                </Route>
               </Route>
             </Routes>
           </BrowserRouter>
